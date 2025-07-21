@@ -55,7 +55,7 @@ export async function findGeffFolders(files) {
                 });
             }
         } catch (error) {
-            console.warn(`Error parsing .zattrs file ${file.name}:`, error);
+            // Silently skip files that can't be parsed as JSON
         }
     }
     

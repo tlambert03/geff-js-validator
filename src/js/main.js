@@ -33,10 +33,6 @@ const geffValidationDetails = document.getElementById('geff-validation-details')
 
 // Initialize the application
 function initializeApp() {
-    console.log('🚀 Initializing Zarr Validator...');
-    console.log('🌐 Browser:', navigator.userAgent);
-    console.log('🍎 Safari detected:', isSafari);
-    
     if (isSafari) {
         showSafariNotSupported();
         return;
@@ -105,83 +101,39 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e) {
-    console.log('🎯 DROP EVENT: Starting drag and drop handling...');
     e.preventDefault();
     dropzone.classList.remove('dragover');
     
-    console.log('📦 DataTransfer object:', e.dataTransfer);
-    console.log('📁 Items count:', e.dataTransfer.items ? e.dataTransfer.items.length : 'No items');
-    console.log('📄 Files count:', e.dataTransfer.files ? e.dataTransfer.files.length : 'No files');
-    
     const items = e.dataTransfer.items;
     if (items) {
-        console.log('✅ Using DataTransfer items API');
         handleDroppedItems(items);
-    } else {
-        console.log('❌ No DataTransfer items found');
     }
 }
 
 async function handleDroppedItems(items) {
-    console.log('🔄 PROCESSING DROPPED ITEMS: Starting...');
-    console.log('📊 Items to process:', items.length);
-    
     const files = await handleDataTransferItems(items);
-    console.log('📋 Files extracted from drop:', files.length);
     
     if (files.length > 0) {
-        console.log('✅ Files found, proceeding to process...');
         processFiles(files);
-    } else {
-        console.log('❌ No files found in dropped items');
     }
 }
 
 function handleFileSelection(e) {
-    console.log('📂 FILE SELECTION: Browse button used');
     const files = Array.from(e.target.files);
-    console.log('📊 Files selected:', files.length);
-    
-    // Log file details for debugging
-    files.forEach((file, index) => {
-        console.log(`📄 File ${index + 1}:`, {
-            name: file.name,
-            webkitRelativePath: file.webkitRelativePath || 'undefined',
-            size: file.size,
-            type: file.type
-        });
-    });
     
     if (files.length > 0) {
-        console.log('✅ Files found via file input, proceeding to process...');
         processFiles(files);
-    } else {
-        console.log('❌ No files selected via file input');
     }
 }
 
 async function processFiles(files) {
-    console.log('⚙️ PROCESSING FILES: Starting validation...');
-    console.log('📊 Total files to process:', files.length);
-    
-    // Log each file for debugging
-    files.forEach((file, index) => {
-        const path = file.webkitRelativePath || file.relativePath || file.name;
-        console.log(`📄 File ${index + 1}: ${path} (${file.size} bytes)`);
-    });
-    
     // Extract folder information
-    console.log('📁 Extracting folder information...');
     const folderInfo = extractFolderInfo(files);
-    console.log('📁 Folder info:', folderInfo);
     
     // Validate zarr structure (now async)
-    console.log('🔍 Starting ZARR/GEFF validation...');
     const validationResult = await validateZarrStructure(files);
-    console.log('🔍 Validation result:', validationResult);
     
     // Display results
-    console.log('🖥️ Displaying results...');
     displayResults(folderInfo, validationResult, files);
 }
 
@@ -319,19 +271,3 @@ function clearResults() {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeApp);
-
-// Legacy initialization for browsers that may not support the above
-console.log('🚀 ZARR FOLDER VALIDATOR INITIALIZED');
-console.log('🌐 Browser info:', {
-    userAgent: navigator.userAgent,
-    platform: navigator.platform,
-    vendor: navigator.vendor
-});
-
-console.log('🔧 Browser capabilities:', {
-    webkitDirectory: 'webkitdirectory' in document.createElement('input'),
-    webkitGetAsEntry: 'webkitGetAsEntry' in DataTransferItem.prototype,
-    fileSystemAccess: 'showDirectoryPicker' in window
-});
-
-console.log('✅ Validator ready for file drops/selections');

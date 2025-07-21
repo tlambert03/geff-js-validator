@@ -27,7 +27,8 @@
                 "min": 764.42,
                 "name": "x",
                 "type": "space",
-                "unit": null
+                "unit": null,
+                "hello": "world"
             }
         ],
         "directed": true,

@@ -296,6 +296,7 @@ header p {
 .file-tree-item {
     padding: 2px 0;
     color: #2c3e50;
+    white-space: pre; /* Preserve whitespace for indentation */
 }
 
 .file-tree-item.folder {
@@ -305,7 +306,6 @@ header p {
 
 .file-tree-item.file {
     color: #7f8c8d;
-    margin-left: 20px;
 }
 
 /* Responsive Design */

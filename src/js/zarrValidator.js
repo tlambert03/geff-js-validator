@@ -14,8 +14,6 @@ import { validateGeffFiles } from './geffValidator.js';
  * @returns {Promise<Object>} Validation result with status, message, version, and counts
  */
 export async function validateZarrStructure(files) {
-    console.log('Validating zarr structure...');
-    
     // First, run GEFF validation
     const geffValidation = await validateGeffFiles(files);
     
