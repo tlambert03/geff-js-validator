@@ -13,16 +13,19 @@ A simple web application for validating and analyzing Zarr folder structures wit
 ## Development
 
 ### Prerequisites
+
 - Node.js 16.0.0 or higher
 
 ### Getting Started
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -35,22 +38,6 @@ npm run dev
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 
-## Project Structure
-
-```
-├── src/
-│   ├── css/
-│   │   └── styles.css          # Main stylesheet
-│   └── js/
-│       ├── main.js             # Main application logic
-│       ├── zarrValidator.js    # Zarr validation utilities
-│       ├── fileTree.js         # File tree rendering
-│       └── fileHandler.js      # Drag & drop file handling
-├── index.html                  # Main HTML file
-├── package.json                # Dependencies and scripts
-└── vite.config.js             # Vite configuration
-```
-
 ## How It Works
 
 1. **Drop Zone**: Users can drag zarr folders or click to browse
@@ -61,7 +48,3 @@ npm run dev
 ## Extending the Validator
 
 The validation logic is in `src/js/zarrValidator.js`. You can extend the `validateZarrStructure` function to add more sophisticated zarr format validation rules.
-
-## License
-
-MIT
