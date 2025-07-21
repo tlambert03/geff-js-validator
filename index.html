@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarr Folder Validator</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zarr Folder Validator</h1>
+            <p>Drop a zarr folder to validate and analyze its structure</p>
+        </header>
+
+        <main>
+            <div id="dropzone" class="dropzone">
+                <div class="dropzone-content">
+                    <div class="dropzone-icon">📁</div>
+                    <h3>Drop Zarr Folder Here</h3>
+                    <p>Drag and drop a zarr folder to begin validation</p>
+                    <button id="browse-btn" class="browse-btn">Or browse files</button>
+                    <input type="file" id="file-input" webkitdirectory multiple style="display: none;">
+                </div>
+            </div>
+
+            <div id="results" class="results hidden">
+                <div class="results-header">
+                    <h2>Validation Results</h2>
+                    <button id="clear-btn" class="clear-btn">Clear</button>
+                </div>
+                
+                <div class="status-section">
+                    <div id="validation-status" class="status-card">
+                        <h3>Validation Status</h3>
+                        <div id="status-indicator" class="status-indicator"></div>
+                        <div id="status-message" class="status-message"></div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-card">
+                        <h3>Folder Information</h3>
+                        <div id="folder-info">
+                            <div class="info-item">
+                                <span class="info-label">Folder Name:</span>
+                                <span id="folder-name" class="info-value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Total Files:</span>
+                                <span id="file-count" class="info-value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Total Size:</span>
+                                <span id="folder-size" class="info-value"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Zarr Structure</h3>
+                        <div id="zarr-info">
+                            <div class="info-item">
+                                <span class="info-label">Format Version:</span>
+                                <span id="zarr-version" class="info-value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Arrays Found:</span>
+                                <span id="array-count" class="info-value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Groups Found:</span>
+                                <span id="group-count" class="info-value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-card">
+                        <h3>File Structure</h3>
+                        <div id="file-tree" class="file-tree"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="src/js/main.js"></script>
+</body>
+</html>
