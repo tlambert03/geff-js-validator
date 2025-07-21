@@ -3,12 +3,21 @@
  */
 
 /**
+ * Zarr validation utilities
+ */
+
+import { validateGeffFiles } from './geffValidator.js';
+
+/**
  * Validates the structure of uploaded files to determine if they form a valid Zarr archive
  * @param {File[]} files - Array of uploaded files
- * @returns {Object} Validation result with status, message, version, and counts
+ * @returns {Promise<Object>} Validation result with status, message, version, and counts
  */
-export function validateZarrStructure(files) {
+export async function validateZarrStructure(files) {
     console.log('Validating zarr structure...');
+    
+    // First, run GEFF validation
+    const geffValidation = await validateGeffFiles(files);
     
     // Look for zarr-specific files
     const hasZarrJson = files.some(file => 
@@ -39,20 +48,39 @@ export function validateZarrStructure(files) {
         return path.includes('.zgroup');
     }).length;
     
-    // Determine validation status
+    // Determine validation status based on both Zarr and GEFF validation
     let status, message, version = 'Unknown';
     
-    if (hasZarrJson || hasZmetadata) {
+    if (geffValidation.status === 'valid') {
         status = 'valid';
-        message = 'Valid Zarr structure detected';
-        version = hasZmetadata ? 'v2' : 'v3 (estimated)';
-    } else if (zarrFiles.length > 0) {
+        message = `Valid GEFF structure detected (${geffValidation.validFolders} folder(s))`;
+        version = geffValidation.geffFolders[0]?.validation?.details?.version || 'Unknown';
+    } else if (geffValidation.status === 'partial') {
         status = 'warning';
-        message = 'Partial Zarr structure found - some metadata may be missing';
-        version = 'Unknown';
+        message = geffValidation.message;
+        version = geffValidation.geffFolders[0]?.validation?.details?.version || 'Unknown';
+    } else if (geffValidation.status === 'no-geff') {
+        // Use the specific message from GEFF validation (includes Safari detection)
+        status = 'invalid';
+        message = geffValidation.message;
+        
+        // Fall back to basic zarr validation if no specific message provided
+        if (!message || message === 'No GEFF folders found (no .zattrs files with geff metadata)') {
+            if (hasZarrJson || hasZmetadata) {
+                status = 'warning';
+                message = 'Valid Zarr structure detected, but no GEFF metadata found';
+                version = hasZmetadata ? 'v2' : 'v3 (estimated)';
+            } else if (zarrFiles.length > 0) {
+                status = 'warning';
+                message = 'Partial Zarr structure found - some metadata may be missing';
+                version = 'Unknown';
+            } else {
+                message = 'No Zarr or GEFF structure detected in uploaded files';
+            }
+        }
     } else {
         status = 'invalid';
-        message = 'No Zarr structure detected in uploaded files';
+        message = geffValidation.message;
     }
     
     return {
@@ -60,7 +88,8 @@ export function validateZarrStructure(files) {
         message,
         version,
         arrayCount,
-        groupCount
+        groupCount,
+        geffValidation // Include detailed GEFF validation results
     };
 }
 
