@@ -1,4 +1,15 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import { copyFileSync } from 'fs';
+
+// Custom plugin to copy geff-schema.json to dist
+function copyGeffSchema() {
+  return {
+    name: 'copy-geff-schema',
+    closeBundle() {
+      copyFileSync('geff-schema.json', 'dist/geff-schema.json');
+    }
+  };
+}
 
 export default defineConfig({
   // Set base to your repository name for GitHub Pages
@@ -17,5 +28,6 @@ export default defineConfig({
   },
   css: {
     devSourcemap: true
-  }
-})
+  },
+  plugins: [copyGeffSchema()]
+});
