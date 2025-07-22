@@ -13,7 +13,7 @@ const ajv = new Ajv();
  */
 async function loadGeffSchema() {
     try {
-        const response = await fetch('/geff-schema.json');
+        const response = await fetch('geff-schema.json');
         if (!response.ok) {
             throw new Error(`Failed to load schema: ${response.statusText}`);
         }
