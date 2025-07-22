@@ -1,14 +1,14 @@
-# Zarr Folder Validator
+# GEFF Folder Validator
 
-A simple web application for validating and analyzing Zarr folder structures with drag-and-drop functionality.
+A simple web application for validating and analyzing GEFF folder structures
+with drag-and-drop functionality.
 
-## Features
-
-- **Drag & Drop Interface**: Simply drag zarr folders onto the page
-- **File Validation**: Detects zarr metadata files and structure
-- **Structure Analysis**: Shows arrays, groups, and format version
-- **File Tree Viewer**: Displays folder structure in readable format
-- **Hot Reloading**: Development server with instant updates
+This is an experimental page associated with the Graph Exchange File Format
+(GEFF).  See [official
+documentation](https://live-image-tracking-tools.github.io/geff/latest/) for
+details on the spec, and the [`geff`
+repository](https://github.com/live-image-tracking-tools/geff) for schema and
+reference python implementation.
 
 ## Development
 
